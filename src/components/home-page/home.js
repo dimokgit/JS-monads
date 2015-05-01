@@ -5,11 +5,11 @@ define(["knockout", "text!./home.html", "promise-monad"], function (ko, homeTemp
     var req = $.ajax({
       type: "GET",
       crossDomain: true,
-      url: "http://www.msn.com"
+      url: search
     }).done(function (data) {
       p.resolve(data.count == 0 ? "Wrong address" : data);
     }).fail(function (error) {
-      p.resolve(JSON.stringify(error));
+      p.reject(error);
     });
     return p;
   }
@@ -17,13 +17,19 @@ define(["knockout", "text!./home.html", "promise-monad"], function (ko, homeTemp
   function HomeViewModel(route) {
     var me = this;
     this.message = ko.observable('Waiting for google search ...');
+    this.error = ko.observable("")
     this.search = ko.observable("Nothing found yet.")
     // Init PM with fetch and show funcs
     var google = new PromiseMonad(fetch, PromiseMonad.lift(show));
     // Push some more funcs
-    google.push(PromiseMonad.lift(function (msg) { return msg + " @ " + Date(); }));
+    google.push(PromiseMonad.lift(function (msg) { return PromiseMonad.version + ":" + msg + " @ " + Date(); }));
     // Start processing pipe by "pumpimg" initial value
-    google.pump("itau").always(me.message);
+    google.pump("http://www.msn.com")
+    //google.pump("http://www.google.com")
+      .done(me.message)
+      .fail(function (e) {
+        me.error(JSON.stringify(e));
+      });
     function show(text) {
       me.search(text);
       return "Done";
