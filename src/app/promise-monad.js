@@ -11,14 +11,14 @@
         funcArray.push(f); return this;
       }
       // Pump a starting value to the execution pipe
-      this.pump = function (x) { return pipe(PromiseMonad.unit(x), funcArray); }
+      this.pump = function (x) { return pipe(x, funcArray); }
       /*** Private ***/
       // bind :: Promise a -> (a -> Promise b) -> Promise b
       function bind(input, f) {
         var output = $.Deferred();
-        input
+        $.when(input)
           .done(function (x) {
-            f(x)
+            $.when(f(x))
             .done(function (y) {
               output.resolve(y);
             })
@@ -49,7 +49,7 @@
         return PromiseMonad.unit(f(x));
       }
     };
-    PromiseMonad.version = "0.1.0";
+    PromiseMonad.version = "0.1.1";
     return PromiseMonad;
   }
 })();
