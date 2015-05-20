@@ -4,8 +4,8 @@
   "main": "lib/promise-monad.js",
   "ignore": [
     "*",
-    ["!lib/"],
-    ["!lib/*"]
+    "!lib/",
+    "!lib/*"
   ],
   "private": true,
   "dependencies": {
