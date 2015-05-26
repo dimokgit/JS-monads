@@ -9,15 +9,18 @@
   ],
   "private": true,
   "dependencies": {
-    "components-bootstrap": "~3.1.1",
-    "crossroads": "~0.12.0",
-    "hasher": "~1.2.0",
-    "requirejs": "~2.1.11",
-    "requirejs-text": "~2.0.10",
-    "knockout": "~3.3.0",
-    "knockout-projections": "~1.1.0"
+    "jquery": "~2.1.4"
   },
   "resolutions": {
     "knockout": "~3.3.0"
+  },
+  "devDependencies": {
+    "hasher": "~1.2.0",
+    "requirejs": "~2.1.11",
+    "requirejs-text": "~2.0.10",
+    "components-bootstrap": "~3.3.4",
+    "crossroads": "~0.12.0",
+    "knockout-projections": "~1.1.0",
+    "knockout": "~3.3.0",
   }
 }
